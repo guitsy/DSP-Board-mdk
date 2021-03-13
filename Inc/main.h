@@ -7,13 +7,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -111,7 +111,31 @@ void Error_Handler(void);
 #define ENC1_B_Pin GPIO_PIN_7
 #define ENC1_B_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
+#define UNDER_VOLTAGE 3.3f
+#define MAX_VOLTAGE 4.19f
+/* each parameter has a name, unit and a value */
+typedef struct{
+	char name[20];
+	int value;
+	int min;
+	int max;
+	int change;	//step size
+	char unit[20];
+}parameter;
 
+/* each effect has a title and several parameters */
+typedef struct {
+	char title[20];
+	parameter par0;
+	parameter par1;
+	parameter par2;
+	parameter par3;
+}effect;
+
+/* the statemachine for the displayed effects */
+typedef enum {IN, CNT}statemachine;
+
+int *input_source;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

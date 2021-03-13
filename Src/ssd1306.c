@@ -1,4 +1,5 @@
 #include "ssd1306.h"
+#include <stdlib.h>
 
 #if defined(SSD1306_USE_I2C)
 
@@ -221,6 +222,44 @@ char ssd1306_WriteChar(SSD1306_t *ssd, char ch, FontDef Font, SSD1306_COLOR colo
     return ch;
 }
 
+
+char ssd1306_DrawSign(SSD1306_t *ssd,uint8_t level, SignDef Sign, SSD1306_COLOR color) {
+    uint32_t i, b, j;
+		char ch =32+level;
+    // Check if character is valid
+    if (ch < 32 || ch > 126)
+        return 0;
+    
+    // Check remaining space on current line
+    if (SSD1306_WIDTH <= (SSD1306.CurrentX + Sign.SignWidth) ||
+        SSD1306_HEIGHT <= (SSD1306.CurrentY + Sign.SignHeight))
+    {
+        // Not enough space on current line
+        return 0;
+    }
+    
+    // Use the font to write
+    for(i = 0; i < Sign.SignHeight; i++) {
+        b = Sign.data[(ch - 32) * Sign.SignHeight + i];
+        for(j = 0; j < Sign.SignWidth; j++) {
+            if((b << j) & 0x8000)  {
+                ssd1306_DrawPixel(ssd, SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR) color);
+            } else {
+                ssd1306_DrawPixel(ssd, SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR)!color);
+            }
+        }
+    }
+    
+    // The current space is now taken
+    SSD1306.CurrentX += Sign.SignWidth;
+    
+    // Return written char for validation
+    return ch;
+}
+
+
+
+
 // Write full string to screenbuffer
 char ssd1306_WriteString(SSD1306_t *ssd, char* str, FontDef Font, SSD1306_COLOR color) {
     // Write until null-byte
@@ -243,3 +282,34 @@ void ssd1306_SetCursor(SSD1306_t *ssd, uint8_t x, uint8_t y) {
     SSD1306.CurrentX = x;
     SSD1306.CurrentY = y;
 }
+
+
+//draw a battery sign 16x9
+void ssd1306_DrawBat(SSD1306_t *ssd,uint8_t level, SignDef Sign, SSD1306_COLOR color){
+	ssd1306_DrawSign(ssd, level, Sign, color);
+}
+
+//draw a horizontal line
+void ssd1306_DrawHLine(SSD1306_t *ssd, uint8_t x1, uint8_t x2, uint8_t y,SSD1306_COLOR color){
+	uint8_t dx=abs(x2-x1);
+	for(int i=0;i<dx+1;i++){
+		if (x1<x2){
+			ssd1306_DrawPixel(ssd,x1+i,y,color);
+		}else if(x1>x2){
+			ssd1306_DrawPixel(ssd,x2+i,y,color);
+		}
+	}
+}
+
+//draw a vertical line
+void ssd1306_DrawVLine(SSD1306_t *ssd, uint8_t x, uint8_t y1, uint8_t y2,SSD1306_COLOR color){
+	uint8_t dy=abs(y2-y1);
+	for(int i=0;i<dy+1;i++){
+		if (y1<y2){
+			ssd1306_DrawPixel(ssd,x,y1+i,color);
+		}else if(y1>y2){
+			ssd1306_DrawPixel(ssd,x,y2+i,color);
+		}
+	}
+}
+	

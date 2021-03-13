@@ -88,6 +88,9 @@ void TLV320_SetLineInVol(uint16_t vol);
  * @bug Probably Bug? When setting the Volume to 0x4f Codec is muted
  */
 void TLV320_SetHeadphoneVol(uint16_t vol);
-
+/**
+ * Shuts the Codec down.
+ */
+void TLV320_PowerDown(void);
 #endif	/* TLV320AIC_H */
 

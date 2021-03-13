@@ -21,12 +21,13 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+//#include <arm_math.h>
 
 /* Private defines -----------------------------------------------------------*/
-#define DSP_BUFFERSIZE 128
-#define DSP_BUFFERSIZE_HALF 64
-#define DSP_BUFFERSIZE_DOUBLE 256
-// #define DEBUG_DSP_LATENCY   // enable to toggle LED to measure latency
+#define DSP_BUFFERSIZE 96
+#define DSP_BUFFERSIZE_HALF DSP_BUFFERSIZE/2
+#define DSP_BUFFERSIZE_DOUBLE DSP_BUFFERSIZE*2
+ #define DEBUG_DSP_LATENCY   // enable to toggle LED to measure latency
 
 /* Private Typedefs ----------------------------------------------------------*/
 typedef struct {
@@ -36,15 +37,15 @@ typedef struct {
 
 enum {
 	DSP_MODE_PASSTHROUGH,
-	DSP_MODE_FIR,
-	DSP_MODE_IIR,
-	DSP_MODE_GAIN,
-	DSP_MODE_FIR_ADAPTIVE
+	DSP_MODE_STANDARD
 };
+
+
 
 /* Private Function Prototypes -----------------------------------------------*/
 void DSP_Process_Data(uint16_t *sourceBuffer, uint16_t *targetBuffer);
 void DSP_Update_Adaptive_FIR(float fg);
+
 
 #ifdef	__cplusplus
 }

@@ -17,6 +17,7 @@
 #include "dsp_board_bsp.h"
 #include "stm32f4xx_hal_i2c.h"
 #include <math.h>
+#include "tlv320aic.h"
 
 EncoderValues_t henc1;
 EncoderValues_t henc2;
@@ -91,8 +92,8 @@ float BSP_ReadBatteryVoltage(uint8_t n)
 	sum /= (uint32_t)avg;
 	// 4096 = 3.3V
 	// 1 = 3.3/4096;
-	// 4.5V correction factor = 0.7333 from Voltage Divider
-	return (float)(sum) * (3.3f/4096.0f) / 0.73333333f;  
+        // 4.2V correction factor = 0.7279 from Voltage Divider
+        return (float)(sum) * (3.3f/4096.0f) / 0.7279f;
 }
 
 /* Set max Battery Charge Current --------------------------------------------*/
@@ -160,16 +161,24 @@ uint16_t BSP_ReadEncoder(EncoderPosition_t encoder)
 /* Select Audio Source -------------------------------------------------------*/
 /**
   * @param  mode The Audio Input Mode
-  * @TODO   also implement MIC as Audio Source
   */ 
-void BSP_SelectAudioIn(uint8_t mode)
-{
-	if(mode == AUDIO_IN_EXT){
-		HAL_GPIO_WritePin(SET_LIN_GPIO_Port, SET_LIN_Pin, GPIO_PIN_RESET);
-	} else {
-		// AUDIO_IN_LINE
-		// default
-		HAL_GPIO_WritePin(SET_LIN_GPIO_Port, SET_LIN_Pin, GPIO_PIN_SET);
+void BSP_SelectAudioIn(AudioInState_t mode){
+	switch(mode){
+		case AUDIO_IN_EXT:
+			HAL_GPIO_WritePin(SET_LIN_GPIO_Port, SET_LIN_Pin, GPIO_PIN_RESET);
+			TLV320_SetInput(LINE);
+			break;
+		case AUDIO_IN_LINE:
+			HAL_GPIO_WritePin(SET_LIN_GPIO_Port, SET_LIN_Pin, GPIO_PIN_SET);
+			TLV320_SetInput(LINE);
+			break;
+		case AUDIO_IN_MIC:
+			TLV320_SetInput(MIC);
+			break;
+		case AUDIO_IN_USB:
+			break;
+		default:
+			break;
 	}
 }
 

@@ -1,0 +1,7 @@
+usbd_audio_if_template.c:95:15:TEMPLATE_Init	24	static
+usbd_audio_if_template.c:113:15:TEMPLATE_DeInit	16	static
+usbd_audio_if_template.c:132:15:TEMPLATE_AudioCmd	24	static
+usbd_audio_if_template.c:146:15:TEMPLATE_VolumeCtl	16	static
+usbd_audio_if_template.c:158:15:TEMPLATE_MuteCtl	16	static
+usbd_audio_if_template.c:170:15:TEMPLATE_PeriodicTC	24	static
+usbd_audio_if_template.c:184:15:TEMPLATE_GetState	4	static

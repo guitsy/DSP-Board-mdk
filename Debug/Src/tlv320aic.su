@@ -1,0 +1,9 @@
+tlv320aic.c:54:6:_tlv320_write8	40	static
+tlv320aic.c:75:6:TLV320_Init	24	static
+tlv320aic.c:94:6:TLV320_Mute	16	static
+tlv320aic.c:113:6:TLV320_SetInput	16	static
+tlv320aic.c:130:6:TLV320_SetMicboost	24	static
+tlv320aic.c:138:6:TLV320_SetLineInVol	16	static
+tlv320aic.c:146:6:TLV320_SetHeadphoneVol	16	static
+tlv320aic.c:155:6:TLV320_Reset	8	static
+tlv320aic.c:160:6:TLV320_PowerDown	8	static

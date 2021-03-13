@@ -157,6 +157,10 @@ void TLV320_Reset(void)
     _tlv320_write8(TLV320_RESET_REG, 0);
 }
 
-
+void TLV320_PowerDown(void)
+{
+    // Turn off the TLV320
+    _tlv320_write8(TLV320_POWER_DOWN_REG, 0x01FF);
+}
 
 

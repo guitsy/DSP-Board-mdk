@@ -27,6 +27,7 @@
 #endif
 
 #include "ssd1306_fonts.h"
+#include "ssd1306_bat.h"
 
 /* vvv I2C config vvv */
 
@@ -120,6 +121,10 @@ void ssd1306_DrawPixel(SSD1306_t *ssd, uint8_t x, uint8_t y, SSD1306_COLOR color
 char ssd1306_WriteChar(SSD1306_t *ssd, char ch, FontDef Font, SSD1306_COLOR color);
 char ssd1306_WriteString(SSD1306_t *ssd, char* str, FontDef Font, SSD1306_COLOR color);
 void ssd1306_SetCursor(SSD1306_t *ssd, uint8_t x, uint8_t y);
+char ssd1306_DrawSign(SSD1306_t *ssd,uint8_t level, SignDef Sign, SSD1306_COLOR color);
+void ssd1306_DrawBat(SSD1306_t *ssd,uint8_t level, SignDef Sign, SSD1306_COLOR color);
+void ssd1306_DrawHLine(SSD1306_t *ssd, uint8_t x1, uint8_t x2, uint8_t y,SSD1306_COLOR color);
+void ssd1306_DrawVLine(SSD1306_t *ssd, uint8_t x, uint8_t y1, uint8_t y2,SSD1306_COLOR color);
 
 // Low-level procedures
 void ssd1306_Reset(SSD1306_t *ssd);

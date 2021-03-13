@@ -85,7 +85,9 @@ extern "C" {
 
 typedef enum { 
 	AUDIO_IN_EXT, 
-	AUDIO_IN_LINE
+	AUDIO_IN_LINE,
+	AUDIO_IN_MIC,
+	AUDIO_IN_USB
 } AudioInState_t;
 
 typedef enum { 
@@ -113,7 +115,7 @@ typedef struct {
 void     BSP_I2C_ScanAddresses     (I2C_HandleTypeDef*);
 void     BSP_Print_to_Matlab       (uint16_t*, uint16_t);
 uint16_t BSP_SineWave              (float, float, uint16_t, uint16_t*, uint16_t);
-void     BSP_SelectAudioIn         (uint8_t);
+void     BSP_SelectAudioIn         (AudioInState_t);
 uint16_t BSP_ReadEncoder           (EncoderPosition_t);
 int16_t  BSP_ReadEncoder_Difference(EncoderPosition_t);
 void     BSP_SetBatteryCurrent     (ChargeCurrent_t);
